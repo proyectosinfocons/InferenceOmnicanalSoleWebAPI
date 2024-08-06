@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+
+    <property name="LOGS_DIR" value="C:\\New Api\\logs"/>
+
+    <property name="LOG_PATTERN" value="%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - UUID:[%X{uuid}] - COID:[%X{conversationId}] %msg%n"/>
+
+    <!-- Appender para la consola -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Appender para archivos con rotación diaria -->
+    <appender name="FILE-ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOGS_DIR}/GENERAL/%d{yyyy-MM-dd}/application.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <!-- Appender for specific channels -->
+    <!--Whatsapp-->
+    <appender name="WHATSAPP-FILE-ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOGS_DIR}/WSP/%d{yyyy-MM-dd}/application-wsp.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <appender name="FACEBOOK-FILE-ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOGS_DIR}/FB/%d{yyyy-MM-dd}/application-fb.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <appender name="WEBWIDGET-FILE-ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOGS_DIR}/WW/%d{yyyy-MM-dd}/application-ww.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <appender name="FIVE9-FILE-ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOGS_DIR}/FIVE9/%d{yyyy-MM-dd}/application-five9.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <logger name="com.inference.whatsappintegration.api.controller.WhatsAppController" additivity="false">
+        <appender-ref ref="WHATSAPP-FILE-ROLLING"/>
+    </logger>
+
+    <logger name="com.inference.whatsappintegration.api.controller.FacebookController" additivity="false">
+        <appender-ref ref="FACEBOOK-FILE-ROLLING"/>
+    </logger>
+
+    <logger name="com.inference.whatsappintegration.api.controller.WebWidgetController" additivity="false">
+        <appender-ref ref="WEBWIDGET-FILE-ROLLING"/>
+    </logger>
+
+    <logger name="com.inference.whatsappintegration.api.controller.Five9ConversationController" additivity="false">
+        <appender-ref ref="FIVE9-FILE-ROLLING"/>
+    </logger>
+
+    <!-- Aplicación de las configuraciones -->
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE-ROLLING"/>
+    </root>
+</configuration>
